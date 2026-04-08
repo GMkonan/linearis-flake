@@ -35,6 +35,11 @@ buildNpmPackage (finalAttrs: {
 
   postPatch = ''
     cp ${finalAttrs.lockSrc}/package-lock.json ./package-lock.json
+
+    # Disable lifecycle scripts
+    perl -0pi -e 's/"postinstall"\s*:\s*"npm run generate && lefthook install"/"postinstall":"echo skip postinstall in nix"/' package.json
+    perl -0pi -e 's/"generate"\s*:\s*"graphql-codegen --config codegen.config.ts"/"generate":"echo skip generate in nix"/' package.json
+    perl -0pi -e 's/"prebuild"\s*:\s*"npm run generate && npm run generate:usage"/"prebuild":"echo skip prebuild in nix"/' package.json
   '';
 
   npmDepsHash = "sha256-PUXLphH82leQLHj5+BIxezKSpRiK/S9WevzK0duwo28=";
