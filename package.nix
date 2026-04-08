@@ -4,6 +4,7 @@
   buildNpmPackage,
   nodejs_22,
   fetchFromGitHub,
+  importNpmLock,
 }:
 buildNpmPackage (finalAttrs: {
   pname = "linearis";
@@ -20,6 +21,17 @@ buildNpmPackage (finalAttrs: {
     tag = "v${finalAttrs.version}";
     hash = "sha256-8Sz1RQJKbimPsGKUpHvqbkXnxxoUHppl4EA2+BjzryM=";
   };
+
+  npmDeps = importNpmLock {
+    pname = finalAttrs.pname;
+    version = finalAttrs.version;
+
+    # Parsed JSON from the matching GitHub tag
+    package = builtins.fromJSON (builtins.readFile "${finalAttrs.lockSrc}/package.json");
+    packageLock = builtins.fromJSON (builtins.readFile "${finalAttrs.lockSrc}/package-lock.json");
+  };
+
+  npmConfigHook = importNpmLock.npmConfigHook;
 
   postPatch = ''
     cp ${finalAttrs.lockSrc}/package-lock.json ./package-lock.json
