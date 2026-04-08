@@ -32,7 +32,7 @@ jobs:
 
       - name: Update package
         run: |
-          nix-update linearis --flake --use-update-script --build
+          nix-update linearis --flake --build
 
       - name: Commit changes if needed
         run: |

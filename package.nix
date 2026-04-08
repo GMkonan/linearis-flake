@@ -20,8 +20,6 @@ buildNpmPackage (finalAttrs: {
 
   nodejs = nodejs_22;
 
-  passthru.updateScript = nix-update-script {};
-
   meta = {
     description = "CLI tool for Linear.app with JSON output, smart ID resolution, and optimized GraphQL queries. Designed for LLM agents and humans who prefer structured data";
     homepage = "https://github.com/czottmann/linearis";
