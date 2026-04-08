@@ -34,6 +34,13 @@ jobs:
         run: |
           nix-update linearis --flake --build
 
+      - name: Refresh lockSrc hash
+        run: |
+          VERSION=$(sed -n 's/^[[:space:]]*version = "\(.*\)";/\1/p' package.nix | head -1)
+          LOCK_HASH=$(nix-prefetch-url --unpack --type sha256 "https://github.com/czottmann/linearis/archive/refs/tags/v${VERSION}.tar.gz")
+          LOCK_HASH_SRI=$(nix hash to-sri --type sha256 "$LOCK_HASH")
+          sed -i '/lockSrc = fetchFromGitHub {/,/};/ s|hash = ".*";|hash = "'"$LOCK_HASH_SRI"'";|' package.nix
+
       - name: Commit changes if needed
         run: |
           if git diff --quiet; then
