@@ -3,8 +3,8 @@
   fetchFromGitHub,
   buildNpmPackage,
   nodejs_22,
+  nix-update-script,
 }:
-
 buildNpmPackage (finalAttrs: {
   pname = "linearis";
   version = "2025.12.3";
@@ -19,6 +19,8 @@ buildNpmPackage (finalAttrs: {
   npmDepsHash = "sha256-PUXLphH82leQLHj5+BIxezKSpRiK/S9WevzK0duwo28=";
 
   nodejs = nodejs_22;
+
+  passthru.updateScript = nix-update-script {};
 
   meta = {
     description = "CLI tool for Linear.app with JSON output, smart ID resolution, and optimized GraphQL queries. Designed for LLM agents and humans who prefer structured data";
