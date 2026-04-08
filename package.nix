@@ -35,16 +35,6 @@ buildNpmPackage (finalAttrs: {
 
   postPatch = ''
     cp ${finalAttrs.lockSrc}/package-lock.json ./package-lock.json
-
-    # Disable lifecycle scripts
-    sed -i \
-      -e 's#"generate": "graphql-codegen --config codegen.config.ts"#"generate": "echo skip generate in nix"#' \
-      -e 's#"postinstall": "npm run generate && lefthook install"#"postinstall": "echo skip postinstall in nix"#' \
-      -e 's#"prebuild": "npm run generate && npm run generate:usage"#"prebuild": "echo skip prebuild in nix"#' \
-      -e 's#"prepare": "lefthook install"#"prepare": "echo skip prepare in nix"#' \
-      package.json
-
-    grep -F '"postinstall": "echo skip postinstall in nix"' package.json
   '';
 
   npmDepsHash = "sha256-PUXLphH82leQLHj5+BIxezKSpRiK/S9WevzK0duwo28=";
@@ -53,7 +43,7 @@ buildNpmPackage (finalAttrs: {
 
   dontNpmBuild = true;
 
-  npmInstallFlags = [ "--ignore-scripts" ];
+  npmFlags = [ "--ignore-scripts" ];
 
   meta = {
     description = "CLI tool for Linear.app with JSON output, smart ID resolution, and optimized GraphQL queries. Designed for LLM agents and humans who prefer structured data";
