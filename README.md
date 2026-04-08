@@ -1,6 +1,7 @@
 ## Linearis Nix Flake
 Small Nix Flake that packages [Linearis](https://github.com/czottmann/linearis), a CLI built for humans and agents to easilly interact with [linear app](https://linear.app/).
 
+This repository also automatically updates for the latest release via CI.
 
 ### Installation
 
@@ -18,3 +19,9 @@ Small Nix Flake that packages [Linearis](https://github.com/czottmann/linearis),
 }
 ```
 
+### Development
+```
+nix flake check
+
+nix build .#linearis -L
+```
