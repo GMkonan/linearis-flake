@@ -8,18 +8,18 @@
 }:
 buildNpmPackage (finalAttrs: {
   pname = "linearis";
-  version = "2026.4.5";
+  version = "2026.4.6";
 
   src = fetchurl {
     url = "https://registry.npmjs.org/${finalAttrs.pname}/-/${finalAttrs.pname}-${finalAttrs.version}.tgz";
-    hash = "sha256-uxYzbcsV5tGwOuZfVoSLibc2roMbeyH+3c+KmII3AFw=";
+    hash = "sha256-FBUrmOSy/S3K+Ki9CacmM2jhfjeTfH3I5FCQ2ENCMkw=";
   };
 
   lockSrc = fetchFromGitHub {
     owner = "czottmann";
     repo = "linearis";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-1o9TqpQrVRVw6QJUYNLYUn+xVvYUHEU2Peplc6qLwUk=";
+    hash = "sha256-gfJb2I4e7ybThOEfu4BhnaNkWKV4KBmVYkjHTml85vU=";
   };
 
   npmDeps = importNpmLock {
